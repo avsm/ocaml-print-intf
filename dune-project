@@ -6,6 +6,7 @@
 (license ISC)
 (authors "Anil Madhavapeddy")
 (maintainers "anil@recoil.org")
+(documentation "https://avsm.github.io/ocaml-print-intf/")
 
 (package
  (name ocaml-print-intf)
