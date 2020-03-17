@@ -9,6 +9,7 @@ maintainer: ["anil@recoil.org"]
 authors: ["Anil Madhavapeddy"]
 license: "ISC"
 homepage: "https://github.com/avsm/ocaml-print-intf"
+doc: "https://avsm.github.io/ocaml-print-intf/"
 bug-reports: "https://github.com/avsm/ocaml-print-intf/issues"
 depends: [
   "dune" {>= "2.0"}
