@@ -1,5 +1,5 @@
 name: Print-intf
-on: [push]
+on: [push, pull_request]
 jobs:
   run:
     name: Tests
@@ -7,14 +7,14 @@ jobs:
     strategy:
       matrix:
         operating-system: [macos-latest, ubuntu-latest, windows-latest]
-        ocaml-version: [ '4.09.0', '4.08.1', '4.07.1', '4.06.1', '4.05.0', '4.04.0', '4.03.0' ]
+        ocaml-version: ["4.09.0", "4.08.1", "4.07.1", "4.06.1", "4.05.0", "4.04.0", "4.03.0"]
     steps:
-    - uses: actions/checkout@master
-    - uses: avsm/setup-ocaml@v1.0
-      with:
-        ocaml-version: ${{ matrix.ocaml-version }}
-    - run: opam pin add ocaml-print-intf.dev -n .
-    - name: Dependencies
-      run: opam install -t . --deps-only
-    - name: Build
-      run: opam exec -- dune build
+      - uses: actions/checkout@v2.0.0
+      - uses: avsm/setup-ocaml@v1.0
+        with:
+          ocaml-version: ${{ matrix.ocaml-version }}
+      - run: opam pin add ocaml-print-intf.dev -n .
+      - name: Dependencies
+        run: opam install -t . --deps-only
+      - name: Build
+        run: opam exec -- dune build
