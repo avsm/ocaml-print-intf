@@ -11,8 +11,10 @@ files.
 On this repository:
 
 ```
-$ dune build
-$ dune exec -- ocaml-print-intf ./_build/default/.ocaml_print_intf.eobjs/byte/dune__exe__Ocaml_print_intf.cmt
+$ dune exec -- ocaml-print-intf ocaml_print_intf.ml
+val root_from_verbose_output : string list -> string
+val target_from_verbose_output : string list -> string
+val build_cmi : string -> string
 val print_intf : string -> unit
 val version : unit -> string
 val usage : unit -> unit
