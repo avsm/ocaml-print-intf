@@ -15,7 +15,7 @@
 the corresponding textual .mli file.  This can be useful to quickly generate
 a skeleton interface file to then annotate with comments or add abstraction.")
  (depends
-  (ocaml (>= 4.03))
+  (ocaml (>= 4.06))
    bos
    dune-build-info))
 

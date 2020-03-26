@@ -13,7 +13,7 @@ doc: "https://avsm.github.io/ocaml-print-intf/"
 bug-reports: "https://github.com/avsm/ocaml-print-intf/issues"
 depends: [
   "dune" {>= "2.0"}
-  "ocaml" {>= "4.03"}
+  "ocaml" {>= "4.06"}
   "bos"
   "dune-build-info"
 ]
