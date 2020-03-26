@@ -1,9 +1,7 @@
-# unreleased
+# v1.1.0 (2020-03-26)
 
-## Added
-
-- Add support `.ml` input files as a shortcut for building the `.cmi` using dune
-  and calling `ocaml-print-intf` on the resulting file. (#1, @NathanReb)
+- Add support for passing `.ml` input files as a shortcut for building the `.cmi`
+  (using dune) and calling `ocaml-print-intf` on the resulting file. (#1, @NathanReb)
 
 # v1.0.0 (2020-03-17)
 
