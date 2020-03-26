@@ -4,7 +4,7 @@
 
 (source (github avsm/ocaml-print-intf))
 (license ISC)
-(authors "Anil Madhavapeddy")
+(authors "Anil Madhavapeddy" "Nathan Rebours")
 (maintainers "anil@recoil.org")
 (documentation "https://avsm.github.io/ocaml-print-intf/")
 
