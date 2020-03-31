@@ -1,4 +1,4 @@
-# unreleased
+# v1.2.0 (2020-03-31)
 
 - Fix a bug with `.ml` input files where `ocaml-print-intf` was unable to figure out
   the dune project root if the path was too long. (#3, @NathanReb)
