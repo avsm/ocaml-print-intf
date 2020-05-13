@@ -71,6 +71,7 @@ let usage () =
 let () =
   match Sys.argv with
   | [| _; "--version" |] -> print_endline (version ())
+  | [| _; "--help" |] -> usage ()
   | [| _; file |] -> begin
       match Fpath.(get_ext (v file)) with
       | ".ml" ->
