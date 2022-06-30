@@ -52,33 +52,60 @@ let build_cmi file =
       file;
     exit 1
 
-let print_intf f =
-  let {Cmi_format.cmi_sign;_} = Cmi_format.read_cmi f in
-  Printtyp.signature std_formatter cmi_sign;
-  print_flush ();
-  print_newline ();
-  flush stdout
+let print_intf output f =
+  let { Cmi_format.cmi_sign; _ } = Cmi_format.read_cmi f in
+  let ppf, close =
+    match output with
+    | None -> (Format.std_formatter, fun () -> ())
+    | Some file ->
+        let co = open_out file in
+        (Format.formatter_of_out_channel co, fun () -> close_out co)
+  in
+  Printtyp.signature ppf cmi_sign;
+  Format.fprintf ppf "@.";
+  close ()
 
 let version () =
   match Build_info.V1.version () with
   | None -> "n/a"
   | Some v -> Build_info.V1.Version.to_string v
 
-let usage () =
-  eprintf "%s <file>\n<file> can be a .cmi or .cmt or .cmti compiled with OCaml %s\n"
+let usage =
+  sprintf
+    "%s <file>\n<file> can be a .cmi or .cmt or .cmti compiled with OCaml %s\n"
     Sys.argv.(0) Sys.ocaml_version
 
+let build_and_print_intf file output =
+  match Fpath.(get_ext (v file)) with
+  | ".ml" ->
+      let cmi = build_cmi file in
+      print_intf output cmi
+  | _ -> (
+      try print_intf output file with
+      | Sys_error err ->
+          prerr_endline err;
+          exit 1
+      | Cmi_format.Error _ ->
+          prerr_endline "Error: not a valid .cmi .cmt or .cmti file";
+          exit 1)
+
 let () =
-  match Sys.argv with
-  | [| _; "--version" |] -> print_endline (version ())
-  | [| _; file |] -> begin
-      match Fpath.(get_ext (v file)) with
-      | ".ml" ->
-        let cmi = build_cmi file in
-        print_intf cmi
-      | _ ->
-        try print_intf file
-        with Sys_error err -> prerr_endline err; exit 1
-           | Cmi_format.Error _ -> prerr_endline "Error: not a valid .cmi .cmt or .cmti file"; exit 1
-    end
-  | _ -> usage (); exit 1
+  let output = ref None in
+  let file = ref "" in
+  let speclist =
+    [
+      ( "--output",
+        Arg.String (fun s -> output := Some s),
+        " Output to the given file" );
+      ("-o", Arg.String (fun s -> output := Some s), " Same as --output");
+      ( "--version",
+        Arg.Unit
+          (fun () ->
+            print_endline (version ());
+            exit 0),
+        " Print version and exit" );
+    ]
+  in
+  let speclist = Arg.align speclist in
+  Arg.parse speclist (fun s -> file := s) usage;
+  build_and_print_intf !file !output
